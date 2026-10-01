@@ -1,0 +1,5 @@
+.app {
+  display: flex;
+  min-height: 100vh;
+  background: url(/i/pattern_space.svg) repeat;
+}

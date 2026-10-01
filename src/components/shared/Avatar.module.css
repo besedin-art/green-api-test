@@ -1,0 +1,49 @@
+.avatar,
+.avatarFallback {
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+.l {
+  width: 64px;
+  height: 64px;
+  flex-basis: 64px;
+  font-size: 22px;
+}
+
+.m {
+  width: 40px;
+  height: 40px;
+  flex-basis: 40px;
+}
+
+.avatar {
+  object-fit: cover;
+}
+
+.avatarFallback {
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-weight: 600;
+}
+
+.gradient0 {
+  background: linear-gradient(135deg, #e11d48, #9f1239);
+}
+
+.gradient1 {
+  background: linear-gradient(135deg, #0f766e, #164e63);
+}
+
+.gradient2 {
+  background: linear-gradient(135deg, #15803d, #14532d);
+}
+
+.gradient3 {
+  background: linear-gradient(135deg, #b45309, #7c2d12);
+}
+
+.gradient4 {
+  background: linear-gradient(135deg, #1d4ed8, #312e81);
+}

@@ -1,0 +1,30 @@
+.aside {
+  width: 400px;
+  padding: 20px 0;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header {
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chatList {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  flex: 1;
+  margin: 20px 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.footer {
+  padding: 0 20px;
+}

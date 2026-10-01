@@ -1,0 +1,68 @@
+.backdrop {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(20 28 36 / 48%);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  width: min(100%, 420px);
+  padding: 24px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 48px rgb(0 0 0 / 20%);
+  animation: appear 160ms ease-out;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.title {
+  color: #202a33;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.closeButton {
+  display: grid;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 4px;
+  color: #66727d;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.closeButton:hover {
+  background: #f0f3f5;
+  color: #202a33;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal {
+    animation: none;
+  }
+}

@@ -1,0 +1,18 @@
+.topPanel {
+  background: #fff;
+  padding: 12px 16px;
+  border-left: 1px solid #dedede;
+  display: flex;
+  gap: 8px;
+}
+
+.contact {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lastSeen {
+  font-size: 12px;
+  color: #aaa;
+}
