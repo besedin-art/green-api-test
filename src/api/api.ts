@@ -3,10 +3,28 @@ import type { Credentials } from '@/store/useCredentialStore';
 
 const apiUrl = 'https://3100.api.green-api.com';
 
-type ChatId = string;
-type ReceiveNotification = { receiptId: number } | null;
+export type GreenApiNotification = {
+  receiptId: number;
+  body?: {
+    typeWebhook?: string;
+    idMessage?: string;
+    timestamp?: number;
+    senderData?: {
+      chatId?: string;
+      chatName?: string;
+      senderName?: string;
+    };
+    messageData?: {
+      typeMessage?: string;
+      textMessageData?: {
+        textMessage?: string;
+      };
+    };
+  };
+} | null;
+
 type CheckAccountResponse = {
-  chatId: ChatId;
+  chatId: string;
   exist: boolean;
   fromCache: boolean;
 };
@@ -15,7 +33,7 @@ export type GetContactInfoResponse = {
   name: string;
   contactName: string;
   chatId: string;
-  chatType: 'user';
+  chatType: 'user' | 'group';
   lastSeen: number;
   phoneNumber: number;
   phoneNumberTimestamp: number;
@@ -25,17 +43,20 @@ type SendMessageResponse = {
 };
 
 export function createGreenApiClient(credentials: Credentials) {
-  function buildUrl(action: string) {
+  function buildUrl(action: string | string[]) {
     const { idInstance, apiTokenInstance } = credentials;
 
     if (!idInstance || !apiTokenInstance) {
       throw new Error('Сначала сохраните данные GREEN-API.');
     }
-
-    return `${apiUrl}/waInstance${idInstance}/${action}/${apiTokenInstance}`;
+    if (typeof action === 'string') {
+      return `${apiUrl}/waInstance${idInstance}/${action}/${apiTokenInstance}`;
+    } else {
+      return `${apiUrl}/waInstance${idInstance}/${action[0]}/${apiTokenInstance}${action[1]}`;
+    }
   }
 
-  function request<T>(action: string, init?: RequestInit) {
+  function request<T>(action: string | string[], init?: RequestInit) {
     return api<T>(buildUrl(action), init);
   }
 
@@ -59,7 +80,7 @@ export function createGreenApiClient(credentials: Credentials) {
       });
     },
 
-    getContactInfo(chatId: ChatId) {
+    getContactInfo(chatId: string) {
       return request<GetContactInfoResponse>('getContactInfo', {
         method: 'POST',
         body: JSON.stringify({ chatId })
@@ -67,11 +88,15 @@ export function createGreenApiClient(credentials: Credentials) {
     },
 
     receiveNotification(receiveTimeout = 5) {
-      return request<ReceiveNotification>(`receiveNotification?receiveTimeout=${receiveTimeout}`);
+      return request<GreenApiNotification>(['receiveNotification', `?receiveTimeout=${receiveTimeout}`]);
     },
 
     deleteNotification(receiptId: number) {
-      return request<void>(`deleteNotification/${receiptId}`, { method: 'DELETE' });
+      return request<void>(['deleteNotification', `/${receiptId}`], { method: 'DELETE' });
+    },
+
+    clearMessagesQueue() {
+      return request<void>('clearMessagesQueue');
     },
 
     sendMessage(chatId: string, message: string) {
