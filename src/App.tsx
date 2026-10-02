@@ -41,7 +41,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (!idInstance && !apiTokenInstance) {
+    if (!idInstance || !apiTokenInstance) {
       openModal('credentials');
     }
   }, []);
